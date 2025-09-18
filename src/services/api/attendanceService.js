@@ -244,12 +244,10 @@ export const attendanceService = {
         
         return successful.length > 0;
       }
-    } catch (error) {
+} catch (error) {
       console.error("Error deleting attendance record:", error?.response?.data?.message || error);
       toast.error("Failed to delete attendance record");
       return false;
-    }
-return false;
     }
   }
 };
