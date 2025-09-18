@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 
-import { toast } from 'react-toastify';
 
 export const studentService = {
   async getAll() {
