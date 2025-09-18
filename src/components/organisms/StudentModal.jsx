@@ -4,7 +4,7 @@ import FormField from "@/components/molecules/FormField";
 import ApperIcon from "@/components/ApperIcon";
 
 const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -12,7 +12,19 @@ const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
     grade: "",
     address: "",
     parentContact: "",
-    status: "Active"
+    status: "Active",
+    subscribeNewsletter: "",
+    agreeTerms: "",
+    tuitionFee: "",
+    scholarshipAmount: "",
+    studyMode: "",
+    studyType: "",
+    personalWebsite: "",
+    socialMediaProfile: "",
+    courseSatisfactionRating: "",
+    instructorRating: "",
+    interests: "",
+    skills: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -20,7 +32,7 @@ const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
 
   useEffect(() => {
     if (student) {
-      setFormData({
+setFormData({
         firstName: student.firstName || "",
         lastName: student.lastName || "",
         email: student.email || "",
@@ -28,18 +40,42 @@ const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
         grade: student.grade || "",
         address: student.address || "",
         parentContact: student.parentContact || "",
-        status: student.status || "Active"
+        status: student.status || "Active",
+        subscribeNewsletter: student.subscribeNewsletter || "",
+        agreeTerms: student.agreeTerms || "",
+        tuitionFee: student.tuitionFee || "",
+        scholarshipAmount: student.scholarshipAmount || "",
+        studyMode: student.studyMode || "",
+        studyType: student.studyType || "",
+        personalWebsite: student.personalWebsite || "",
+        socialMediaProfile: student.socialMediaProfile || "",
+        courseSatisfactionRating: student.courseSatisfactionRating || "",
+        instructorRating: student.instructorRating || "",
+        interests: student.interests || "",
+        skills: student.skills || ""
       });
     } else {
       setFormData({
-        firstName: "",
+firstName: "",
         lastName: "",
         email: "",
         phone: "",
         grade: "",
         address: "",
         parentContact: "",
-        status: "Active"
+        status: "Active",
+        subscribeNewsletter: "",
+        agreeTerms: "",
+        tuitionFee: "",
+        scholarshipAmount: "",
+        studyMode: "",
+        studyType: "",
+        personalWebsite: "",
+        socialMediaProfile: "",
+        courseSatisfactionRating: "",
+        instructorRating: "",
+        interests: "",
+        skills: ""
       });
     }
     setErrors({});
@@ -64,13 +100,21 @@ const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     if (!formData.grade.trim()) newErrors.grade = "Grade is required";
     
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
+    }
+    
+    if (formData.personalWebsite && !/^https?:\/\/.+/.test(formData.personalWebsite)) {
+      newErrors.personalWebsite = "Please enter a valid URL starting with http:// or https://";
+    }
+    
+    if (formData.socialMediaProfile && !/^https?:\/\/.+/.test(formData.socialMediaProfile)) {
+      newErrors.socialMediaProfile = "Please enter a valid URL starting with http:// or https://";
     }
 
     setErrors(newErrors);
@@ -196,7 +240,7 @@ const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
               value={formData.status}
               onChange={handleInputChange}
               options={statusOptions}
-            />
+/>
 
             <div className="md:col-span-2">
               <FormField
@@ -217,6 +261,122 @@ const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
                 onChange={handleInputChange}
                 error={errors.parentContact}
                 placeholder="Enter parent/guardian contact information"
+              />
+            </div>
+
+            <FormField
+              label="Subscribe to Newsletter"
+              name="subscribeNewsletter"
+              type="checkbox"
+              value={formData.subscribeNewsletter}
+              onChange={handleInputChange}
+              values={["Yes", "No"]}
+            />
+
+            <FormField
+              label="Agree to Terms and Conditions"
+              name="agreeTerms"
+              type="checkbox"
+              value={formData.agreeTerms}
+              onChange={handleInputChange}
+              values={["Agree", "Disagree"]}
+            />
+
+            <FormField
+              label="Tuition Fee"
+              name="tuitionFee"
+              type="currency"
+              value={formData.tuitionFee}
+              onChange={handleInputChange}
+              error={errors.tuitionFee}
+              placeholder="Enter amount"
+            />
+
+            <FormField
+              label="Scholarship Amount"
+              name="scholarshipAmount"
+              type="currency"
+              value={formData.scholarshipAmount}
+              onChange={handleInputChange}
+              error={errors.scholarshipAmount}
+              placeholder="Enter amount"
+            />
+
+            <FormField
+              label="Preferred Study Mode"
+              name="studyMode"
+              type="radio"
+              value={formData.studyMode}
+              onChange={handleInputChange}
+              values={["Online", "Offline"]}
+            />
+
+            <FormField
+              label="Study Type"
+              name="studyType"
+              type="radio"
+              value={formData.studyType}
+              onChange={handleInputChange}
+              values={["Full-time", "Part-time"]}
+            />
+
+            <FormField
+              label="Personal Website"
+              name="personalWebsite"
+              type="website"
+              value={formData.personalWebsite}
+              onChange={handleInputChange}
+              error={errors.personalWebsite}
+              placeholder="Enter URL"
+            />
+
+            <FormField
+              label="Social Media Profile"
+              name="socialMediaProfile"
+              type="website"
+              value={formData.socialMediaProfile}
+              onChange={handleInputChange}
+              error={errors.socialMediaProfile}
+              placeholder="Enter URL"
+            />
+
+            <FormField
+              label="Course Satisfaction Rating"
+              name="courseSatisfactionRating"
+              type="rating"
+              value={formData.courseSatisfactionRating}
+              onChange={handleInputChange}
+              values={["1", "2", "3", "4", "5"]}
+            />
+
+            <FormField
+              label="Instructor Rating"
+              name="instructorRating"
+              type="rating"
+              value={formData.instructorRating}
+              onChange={handleInputChange}
+              values={["1", "2", "3", "4", "5"]}
+            />
+
+            <div className="md:col-span-2">
+              <FormField
+                label="Interests"
+                name="interests"
+                type="tag"
+                value={formData.interests}
+                onChange={handleInputChange}
+                placeholder="Academic, Extracurricular"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <FormField
+                label="Skills"
+                name="skills"
+                type="tag"
+                value={formData.skills}
+                onChange={handleInputChange}
+                placeholder="Programming, Public Speaking, Graphic Design, etc."
               />
             </div>
           </div>
