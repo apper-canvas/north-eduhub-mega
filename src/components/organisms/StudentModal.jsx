@@ -5,26 +5,26 @@ import ApperIcon from "@/components/ApperIcon";
 
 const StudentModal = ({ isOpen, onClose, onSave, student = null }) => {
 const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    grade: "",
-    address: "",
-    parentContact: "",
-    status: "Active",
-    subscribeNewsletter: "",
-    agreeTerms: "",
-    tuitionFee: "",
-    scholarshipAmount: "",
-    studyMode: "",
-    studyType: "",
-    personalWebsite: "",
-    socialMediaProfile: "",
-    courseSatisfactionRating: "",
-    instructorRating: "",
-    interests: "",
-    skills: ""
+    first_name_c: "",
+    last_name_c: "",
+    email_c: "",
+    phone_c: "",
+    grade_c: "",
+    address_c: "",
+    parent_contact_c: "",
+    status_c: "Active",
+    subscribe_newsletter_c: "",
+    agree_terms_c: "",
+    tuition_fee_c: "",
+    scholarship_amount_c: "",
+    study_mode_c: "",
+    study_type_c: "",
+    personal_website_c: "",
+    social_media_profile_c: "",
+    course_satisfaction_rating_c: "",
+    instructor_rating_c: "",
+    interests_c: "",
+    skills_c: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -33,49 +33,49 @@ const [formData, setFormData] = useState({
   useEffect(() => {
     if (student) {
 setFormData({
-        firstName: student.firstName || "",
-        lastName: student.lastName || "",
-        email: student.email || "",
-        phone: student.phone || "",
-        grade: student.grade || "",
-        address: student.address || "",
-        parentContact: student.parentContact || "",
-        status: student.status || "Active",
-        subscribeNewsletter: student.subscribeNewsletter || "",
-        agreeTerms: student.agreeTerms || "",
-        tuitionFee: student.tuitionFee || "",
-        scholarshipAmount: student.scholarshipAmount || "",
-        studyMode: student.studyMode || "",
-        studyType: student.studyType || "",
-        personalWebsite: student.personalWebsite || "",
-        socialMediaProfile: student.socialMediaProfile || "",
-        courseSatisfactionRating: student.courseSatisfactionRating || "",
-        instructorRating: student.instructorRating || "",
-        interests: student.interests || "",
-        skills: student.skills || ""
+        first_name_c: student.first_name_c || "",
+        last_name_c: student.last_name_c || "",
+        email_c: student.email_c || "",
+        phone_c: student.phone_c || "",
+        grade_c: student.grade_c || "",
+        address_c: student.address_c || "",
+        parent_contact_c: student.parent_contact_c || "",
+        status_c: student.status_c || "Active",
+        subscribe_newsletter_c: student.subscribe_newsletter_c || "",
+        agree_terms_c: student.agree_terms_c || "",
+        tuition_fee_c: student.tuition_fee_c || "",
+        scholarship_amount_c: student.scholarship_amount_c || "",
+        study_mode_c: student.study_mode_c || "",
+        study_type_c: student.study_type_c || "",
+        personal_website_c: student.personal_website_c || "",
+        social_media_profile_c: student.social_media_profile_c || "",
+        course_satisfaction_rating_c: student.course_satisfaction_rating_c || "",
+        instructor_rating_c: student.instructor_rating_c || "",
+        interests_c: student.interests_c || "",
+        skills_c: student.skills_c || ""
       });
     } else {
       setFormData({
-firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        grade: "",
-        address: "",
-        parentContact: "",
-        status: "Active",
-        subscribeNewsletter: "",
-        agreeTerms: "",
-        tuitionFee: "",
-        scholarshipAmount: "",
-        studyMode: "",
-        studyType: "",
-        personalWebsite: "",
-        socialMediaProfile: "",
-        courseSatisfactionRating: "",
-        instructorRating: "",
-        interests: "",
-        skills: ""
+first_name_c: "",
+        last_name_c: "",
+        email_c: "",
+        phone_c: "",
+        grade_c: "",
+        address_c: "",
+        parent_contact_c: "",
+        status_c: "Active",
+        subscribe_newsletter_c: "",
+        agree_terms_c: "",
+        tuition_fee_c: "",
+        scholarship_amount_c: "",
+        study_mode_c: "",
+        study_type_c: "",
+        personal_website_c: "",
+        social_media_profile_c: "",
+        course_satisfaction_rating_c: "",
+        instructor_rating_c: "",
+        interests_c: "",
+        skills_c: ""
       });
     }
     setErrors({});
@@ -100,21 +100,21 @@ firstName: "",
   const validateForm = () => {
     const newErrors = {};
     
-if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.grade.trim()) newErrors.grade = "Grade is required";
+if (!formData.first_name_c.trim()) newErrors.first_name_c = "First name is required";
+    if (!formData.last_name_c.trim()) newErrors.last_name_c = "Last name is required";
+    if (!formData.email_c.trim()) newErrors.email_c = "Email is required";
+    if (!formData.grade_c.trim()) newErrors.grade_c = "Grade is required";
     
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+if (formData.email_c && !/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Please enter a valid email address";
     }
     
-    if (formData.personalWebsite && !/^https?:\/\/.+/.test(formData.personalWebsite)) {
-      newErrors.personalWebsite = "Please enter a valid URL starting with http:// or https://";
+if (formData.personal_website_c && !/^https?:\/\/.+/.test(formData.personal_website_c)) {
+      newErrors.personal_website_c = "Please enter a valid URL starting with http:// or https://";
     }
     
-    if (formData.socialMediaProfile && !/^https?:\/\/.+/.test(formData.socialMediaProfile)) {
-      newErrors.socialMediaProfile = "Please enter a valid URL starting with http:// or https://";
+if (formData.social_media_profile_c && !/^https?:\/\/.+/.test(formData.social_media_profile_c)) {
+      newErrors.social_media_profile_c = "Please enter a valid URL starting with http:// or https://";
     }
 
     setErrors(newErrors);
@@ -128,9 +128,9 @@ if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
 
     setLoading(true);
     try {
-      const studentData = {
+const studentData = {
         ...formData,
-        enrollmentDate: student ? student.enrollmentDate : new Date().toISOString()
+        enrollment_date_c: student ? student.enrollment_date_c : new Date().toISOString()
       };
       
       await onSave(studentData);
@@ -182,199 +182,199 @@ if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
 
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FormField
+<FormField
               label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name_c"
+              value={formData.first_name_c}
               onChange={handleInputChange}
-              error={errors.firstName}
+              error={errors.first_name_c}
               required
               placeholder="Enter first name"
             />
 
-            <FormField
+<FormField
               label="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name_c"
+              value={formData.last_name_c}
               onChange={handleInputChange}
-              error={errors.lastName}
+              error={errors.last_name_c}
               required
               placeholder="Enter last name"
             />
 
-            <FormField
+<FormField
               label="Email"
-              name="email"
+              name="email_c"
               type="email"
-              value={formData.email}
+              value={formData.email_c}
               onChange={handleInputChange}
-              error={errors.email}
+              error={errors.email_c}
               required
               placeholder="Enter email address"
             />
 
-            <FormField
+<FormField
               label="Phone"
-              name="phone"
-              value={formData.phone}
+              name="phone_c"
+              value={formData.phone_c}
               onChange={handleInputChange}
-              error={errors.phone}
+              error={errors.phone_c}
               placeholder="Enter phone number"
             />
 
-            <FormField
+<FormField
               label="Grade"
-              name="grade"
+              name="grade_c"
               type="select"
-              value={formData.grade}
+              value={formData.grade_c}
               onChange={handleInputChange}
-              error={errors.grade}
+              error={errors.grade_c}
               required
               options={gradeOptions}
             />
 
-            <FormField
+<FormField
               label="Status"
-              name="status"
+              name="status_c"
               type="select"
-              value={formData.status}
+              value={formData.status_c}
               onChange={handleInputChange}
               options={statusOptions}
 />
 
             <div className="md:col-span-2">
-              <FormField
+<FormField
                 label="Address"
-                name="address"
-                value={formData.address}
+                name="address_c"
+                value={formData.address_c}
                 onChange={handleInputChange}
-                error={errors.address}
+                error={errors.address_c}
                 placeholder="Enter home address"
               />
             </div>
 
             <div className="md:col-span-2">
-              <FormField
+<FormField
                 label="Parent/Guardian Contact"
-                name="parentContact"
-                value={formData.parentContact}
+                name="parent_contact_c"
+                value={formData.parent_contact_c}
                 onChange={handleInputChange}
-                error={errors.parentContact}
+                error={errors.parent_contact_c}
                 placeholder="Enter parent/guardian contact information"
               />
             </div>
 
-            <FormField
+<FormField
               label="Subscribe to Newsletter"
-              name="subscribeNewsletter"
+              name="subscribe_newsletter_c"
               type="checkbox"
-              value={formData.subscribeNewsletter}
+              value={formData.subscribe_newsletter_c}
               onChange={handleInputChange}
               values={["Yes", "No"]}
             />
 
-            <FormField
+<FormField
               label="Agree to Terms and Conditions"
-              name="agreeTerms"
+              name="agree_terms_c"
               type="checkbox"
-              value={formData.agreeTerms}
+              value={formData.agree_terms_c}
               onChange={handleInputChange}
               values={["Agree", "Disagree"]}
             />
 
-            <FormField
+<FormField
               label="Tuition Fee"
-              name="tuitionFee"
+              name="tuition_fee_c"
               type="currency"
-              value={formData.tuitionFee}
+              value={formData.tuition_fee_c}
               onChange={handleInputChange}
-              error={errors.tuitionFee}
+              error={errors.tuition_fee_c}
               placeholder="Enter amount"
             />
 
-            <FormField
+<FormField
               label="Scholarship Amount"
-              name="scholarshipAmount"
+              name="scholarship_amount_c"
               type="currency"
-              value={formData.scholarshipAmount}
+              value={formData.scholarship_amount_c}
               onChange={handleInputChange}
-              error={errors.scholarshipAmount}
+              error={errors.scholarship_amount_c}
               placeholder="Enter amount"
             />
 
-            <FormField
+<FormField
               label="Preferred Study Mode"
-              name="studyMode"
+              name="study_mode_c"
               type="radio"
-              value={formData.studyMode}
+              value={formData.study_mode_c}
               onChange={handleInputChange}
               values={["Online", "Offline"]}
             />
 
-            <FormField
+<FormField
               label="Study Type"
-              name="studyType"
+              name="study_type_c"
               type="radio"
-              value={formData.studyType}
+              value={formData.study_type_c}
               onChange={handleInputChange}
               values={["Full-time", "Part-time"]}
             />
 
-            <FormField
+<FormField
               label="Personal Website"
-              name="personalWebsite"
+              name="personal_website_c"
               type="website"
-              value={formData.personalWebsite}
+              value={formData.personal_website_c}
               onChange={handleInputChange}
-              error={errors.personalWebsite}
+              error={errors.personal_website_c}
               placeholder="Enter URL"
             />
 
-            <FormField
+<FormField
               label="Social Media Profile"
-              name="socialMediaProfile"
+              name="social_media_profile_c"
               type="website"
-              value={formData.socialMediaProfile}
+              value={formData.social_media_profile_c}
               onChange={handleInputChange}
-              error={errors.socialMediaProfile}
+              error={errors.social_media_profile_c}
               placeholder="Enter URL"
             />
 
-            <FormField
+<FormField
               label="Course Satisfaction Rating"
-              name="courseSatisfactionRating"
+              name="course_satisfaction_rating_c"
               type="rating"
-              value={formData.courseSatisfactionRating}
+              value={formData.course_satisfaction_rating_c}
               onChange={handleInputChange}
               values={["1", "2", "3", "4", "5"]}
             />
 
-            <FormField
+<FormField
               label="Instructor Rating"
-              name="instructorRating"
+              name="instructor_rating_c"
               type="rating"
-              value={formData.instructorRating}
+              value={formData.instructor_rating_c}
               onChange={handleInputChange}
               values={["1", "2", "3", "4", "5"]}
             />
 
             <div className="md:col-span-2">
-              <FormField
+<FormField
                 label="Interests"
-                name="interests"
+                name="interests_c"
                 type="tag"
-                value={formData.interests}
+                value={formData.interests_c}
                 onChange={handleInputChange}
                 placeholder="Academic, Extracurricular"
               />
             </div>
 
-            <div className="md:col-span-2">
+<div className="md:col-span-2">
               <FormField
                 label="Skills"
-                name="skills"
+                name="skills_c"
                 type="tag"
-                value={formData.skills}
+                value={formData.skills_c}
                 onChange={handleInputChange}
                 placeholder="Programming, Public Speaking, Graphic Design, etc."
               />

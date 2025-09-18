@@ -41,11 +41,11 @@ const Students = () => {
     if (!searchQuery.trim()) {
       setFilteredStudents(students);
     } else {
-      const filtered = students.filter(student =>
-        student.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        student.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        student.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        student.grade.toLowerCase().includes(searchQuery.toLowerCase())
+const filtered = students.filter(student =>
+        student.first_name_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.last_name_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.email_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.grade_c?.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredStudents(filtered);
     }
@@ -64,8 +64,43 @@ const Students = () => {
   const handleSaveStudent = async (studentData) => {
     try {
       if (editingStudent) {
-        const updatedStudent = await studentService.update(editingStudent.Id, studentData);
-        setStudents(prev => prev.map(s => s.Id === editingStudent.Id ? updatedStudent : s));
+const mappedData = {
+          Name: `${studentData.first_name_c} ${studentData.last_name_c}`,
+          first_name_c: studentData.first_name_c,
+          last_name_c: studentData.last_name_c,
+          email_c: studentData.email_c,
+          phone_c: studentData.phone_c,
+          grade_c: studentData.grade_c,
+          enrollment_date_c: studentData.enrollment_date_c,
+          photo_c: studentData.photo_c,
+          address_c: studentData.address_c,
+          parent_contact_c: studentData.parent_contact_c,
+          status_c: studentData.status_c,
+          subscribe_newsletter_c: studentData.subscribe_newsletter_c,
+          agree_terms_c: studentData.agree_terms_c,
+          tuition_fee_c: studentData.tuition_fee_c,
+          scholarship_amount_c: studentData.scholarship_amount_c,
+          study_mode_c: studentData.study_mode_c,
+          study_type_c: studentData.study_type_c,
+          personal_website_c: studentData.personal_website_c,
+          social_media_profile_c: studentData.social_media_profile_c,
+          course_satisfaction_rating_c: studentData.course_satisfaction_rating_c,
+          instructor_rating_c: studentData.instructor_rating_c,
+          interests_c: studentData.interests_c,
+          skills_c: studentData.skills_c
+        };
+        
+        const updatedStudent = editingStudent 
+          ? await studentService.update(editingStudent.Id, mappedData)
+          : await studentService.create(mappedData);
+          
+        if (updatedStudent) {
+          if (editingStudent) {
+            setStudents(prev => prev.map(s => s.Id === editingStudent.Id ? updatedStudent : s));
+          } else {
+            setStudents(prev => [...prev, updatedStudent]);
+          }
+        }
         toast.success("Student updated successfully");
       } else {
         const newStudent = await studentService.create(studentData);
@@ -135,7 +170,7 @@ const Students = () => {
           </div>
           <div className="flex items-center space-x-4 text-sm text-gray-600">
             <span>Total: <strong>{students.length}</strong> students</span>
-            <span>Active: <strong>{students.filter(s => s.status === "Active").length}</strong></span>
+<span>Active: <strong>{students.filter(s => s.status_c === "Active").length}</strong></span>
           </div>
         </div>
       </div>

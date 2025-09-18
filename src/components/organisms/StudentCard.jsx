@@ -44,13 +44,13 @@ const StudentCard = ({ student, onEdit, onDelete }) => {
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">
-              {student.firstName} {student.lastName}
+<h3 className="text-lg font-semibold text-gray-900 truncate">
+              {student.first_name_c} {student.last_name_c}
             </h3>
-            <p className="text-sm text-gray-600 mb-1">Grade {getGradeLevel(student.grade)}</p>
+<p className="text-sm text-gray-600 mb-1">Grade {getGradeLevel(student.grade_c)}</p>
             <div className="flex items-center space-x-2">
-              <Badge variant={getStatusVariant(student.status)}>
-                {student.status || "Active"}
+<Badge variant={getStatusVariant(student.status_c)}>
+                {student.status_c || "Active"}
               </Badge>
             </div>
           </div>
@@ -59,15 +59,15 @@ const StudentCard = ({ student, onEdit, onDelete }) => {
         <div className="space-y-3 mb-6">
           <div className="flex items-center text-sm text-gray-600">
             <ApperIcon name="Mail" className="w-4 h-4 mr-2 text-gray-400" />
-            <span className="truncate">{student.email}</span>
+<span className="truncate">{student.email_c}</span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <ApperIcon name="Phone" className="w-4 h-4 mr-2 text-gray-400" />
-            <span>{student.phone || "N/A"}</span>
+<span>{student.phone_c || "N/A"}</span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <ApperIcon name="Calendar" className="w-4 h-4 mr-2 text-gray-400" />
-            <span>Enrolled {new Date(student.enrollmentDate).toLocaleDateString()}</span>
+<span>Enrolled {new Date(student.enrollment_date_c).toLocaleDateString()}</span>
           </div>
         </div>
 

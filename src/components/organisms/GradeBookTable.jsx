@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 import Input from "@/components/atoms/Input";
-import ApperIcon from "@/components/ApperIcon";
-import { toast } from "react-toastify";
 
 const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
   const [editingGrade, setEditingGrade] = useState(null);
   const [editValue, setEditValue] = useState("");
 
-  const getStudentName = (studentId) => {
+const getStudentName = (studentId) => {
     const student = students.find(s => s.Id === parseInt(studentId));
-    return student ? `${student.firstName} ${student.lastName}` : "Unknown Student";
+    return student ? `${student.first_name_c} ${student.last_name_c}` : "Unknown Student";
   };
 
-  const getClassName = (classId) => {
+const getClassName = (classId) => {
     const classItem = classes.find(c => c.Id === parseInt(classId));
-    return classItem ? classItem.name : "Unknown Class";
+    return classItem ? classItem.name_c : "Unknown Class";
   };
 
   const getGradePercentage = (score, maxScore) => {
@@ -40,21 +40,21 @@ const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
     return "danger";
   };
 
-  const handleStartEdit = (grade) => {
+const handleStartEdit = (grade) => {
     setEditingGrade(grade.Id);
-    setEditValue(grade.score.toString());
+    setEditValue(grade.score_c.toString());
   };
 
   const handleSaveEdit = async (grade) => {
     const newScore = parseFloat(editValue);
     
-    if (isNaN(newScore) || newScore < 0 || newScore > grade.maxScore) {
-      toast.error(`Score must be between 0 and ${grade.maxScore}`);
+if (isNaN(newScore) || newScore < 0 || newScore > grade.max_score_c) {
+      toast.error(`Score must be between 0 and ${grade.max_score_c}`);
       return;
     }
 
     try {
-      await onUpdateGrade(grade.Id, { ...grade, score: newScore });
+await onUpdateGrade(grade.Id, { ...grade, score_c: newScore });
       setEditingGrade(null);
       setEditValue("");
       toast.success("Grade updated successfully");
@@ -68,9 +68,9 @@ const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
     setEditValue("");
   };
 
-  const sortedGrades = [...grades].sort((a, b) => {
-    const studentA = getStudentName(a.studentId);
-    const studentB = getStudentName(b.studentId);
+const sortedGrades = [...grades].sort((a, b) => {
+    const studentA = getStudentName(a.student_id_c?.Id || a.student_id_c);
+    const studentB = getStudentName(b.student_id_c?.Id || b.student_id_c);
     return studentA.localeCompare(studentB);
   });
 
@@ -97,8 +97,8 @@ const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
               </tr>
             </thead>
             <tbody>
-              {sortedGrades.map((grade) => {
-                const percentage = getGradePercentage(grade.score, grade.maxScore);
+{sortedGrades.map((grade) => {
+                const percentage = getGradePercentage(grade.score_c, grade.max_score_c);
                 const gradeLetter = getGradeLetter(percentage);
                 const isEditing = editingGrade === grade.Id;
 
@@ -109,16 +109,16 @@ const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
                         <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-3">
                           <ApperIcon name="User" className="w-4 h-4 text-primary-600" />
                         </div>
-                        <span className="font-medium text-gray-900">
-                          {getStudentName(grade.studentId)}
+<span className="font-medium text-gray-900">
+                          {getStudentName(grade.student_id_c?.Id || grade.student_id_c)}
                         </span>
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-gray-700">{getClassName(grade.classId)}</span>
+<span className="text-gray-700">{getClassName(grade.class_id_c?.Id || grade.class_id_c)}</span>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-gray-700">{grade.assignmentName}</span>
+<span className="text-gray-700">{grade.assignment_name_c}</span>
                     </td>
                     <td className="py-4 px-4">
                       {isEditing ? (
@@ -128,15 +128,15 @@ const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
                             value={editValue}
                             onChange={(e) => setEditValue(e.target.value)}
                             className="w-20"
-                            min="0"
-                            max={grade.maxScore}
+min="0"
+                            max={grade.max_score_c}
                             step="0.1"
                           />
-                          <span className="text-gray-500">/ {grade.maxScore}</span>
+<span className="text-gray-500">/ {grade.max_score_c}</span>
                         </div>
                       ) : (
-                        <span className="font-medium text-gray-900">
-                          {grade.score} / {grade.maxScore}
+<span className="font-medium text-gray-900">
+                          {grade.score_c} / {grade.max_score_c}
                         </span>
                       )}
                     </td>
@@ -146,8 +146,8 @@ const GradeBookTable = ({ grades, students, classes, onUpdateGrade }) => {
                       </Badge>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-gray-600">
-                        {new Date(grade.date).toLocaleDateString()}
+<span className="text-gray-600">
+                        {new Date(grade.date_c).toLocaleDateString()}
                       </span>
                     </td>
                     <td className="py-4 px-4">

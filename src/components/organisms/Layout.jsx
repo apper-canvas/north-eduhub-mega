@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-
+import { AuthContext } from "../App";
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
+  const { user } = useSelector((state) => state.user);
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: "LayoutDashboard", current: location.pathname === "/" },
@@ -20,6 +23,10 @@ const Layout = () => {
   const handleNavigation = (href) => {
     navigate(href);
     setSidebarOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   // Desktop Sidebar
@@ -55,7 +62,33 @@ const Layout = () => {
                 {item.name}
               </button>
             ))}
-          </nav>
+</nav>
+          
+          {/* User Profile and Logout */}
+          <div className="mt-auto p-4 border-t border-gray-200">
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                <ApperIcon name="User" className="w-5 h-5 text-primary-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {user?.firstName} {user?.lastName}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {user?.emailAddress}
+                </p>
+              </div>
+            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleLogout}
+              className="w-full"
+            >
+              <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -108,7 +141,33 @@ const Layout = () => {
                     {item.name}
                   </button>
                 ))}
-              </nav>
+</nav>
+              
+              {/* Mobile User Profile and Logout */}
+              <div className="mt-auto p-4 border-t border-gray-200">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                    <ApperIcon name="User" className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p className="text-xs text-gray-500 truncate">
+                      {user?.emailAddress}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="w-full"
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
             </div>
           </div>
         </div>

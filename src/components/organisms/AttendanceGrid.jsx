@@ -12,16 +12,16 @@ const AttendanceGrid = ({ attendance, students, classes, onUpdateAttendance }) =
   const weekStart = startOfWeek(selectedWeek, { weekStartsOn: 1 });
   const weekDays = Array.from({ length: 5 }, (_, i) => addDays(weekStart, i));
 
-  const getStudentName = (studentId) => {
+const getStudentName = (studentId) => {
     const student = students.find(s => s.Id === parseInt(studentId));
-    return student ? `${student.firstName} ${student.lastName}` : "Unknown Student";
+    return student ? `${student.first_name_c} ${student.last_name_c}` : "Unknown Student";
   };
 
   const getAttendanceForDate = (studentId, date) => {
-    const dateStr = format(date, "yyyy-MM-dd");
+const dateStr = format(date, "yyyy-MM-dd");
     return attendance.find(a => 
-      parseInt(a.studentId) === parseInt(studentId) && 
-      a.date.startsWith(dateStr)
+      parseInt(a.student_id_c?.Id || a.student_id_c) === parseInt(studentId) && 
+      a.date_c.startsWith(dateStr)
     );
   };
 
@@ -33,12 +33,12 @@ const AttendanceGrid = ({ attendance, students, classes, onUpdateAttendance }) =
       if (existing) {
         await onUpdateAttendance(existing.Id, { ...existing, status });
       } else {
-        const newAttendance = {
-          studentId: studentId.toString(),
-          classId: "1", // Default class
-          date: dateStr,
-          status,
-          notes: ""
+const newAttendance = {
+          student_id_c: parseInt(studentId),
+          class_id_c: 1, // Default class
+          date_c: dateStr,
+          status_c: status,
+          notes_c: ""
         };
         await onUpdateAttendance(null, newAttendance);
       }
@@ -48,7 +48,7 @@ const AttendanceGrid = ({ attendance, students, classes, onUpdateAttendance }) =
     }
   };
 
-  const getStatusColor = (status) => {
+const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "present":
         return "present";
@@ -123,14 +123,14 @@ const AttendanceGrid = ({ attendance, students, classes, onUpdateAttendance }) =
                       <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-3">
                         <ApperIcon name="User" className="w-4 h-4 text-primary-600" />
                       </div>
-                      <span className="font-medium text-gray-900">
-                        {student.firstName} {student.lastName}
+<span className="font-medium text-gray-900">
+                        {student.first_name_c} {student.last_name_c}
                       </span>
                     </div>
                   </td>
                   {weekDays.map((day) => {
-                    const attendanceRecord = getAttendanceForDate(student.Id, day);
-                    const status = attendanceRecord?.status || "present";
+const attendanceRecord = getAttendanceForDate(student.Id, day);
+                    const status = attendanceRecord?.status_c || "present";
 
                     return (
                       <td key={day.toISOString()} className="py-4 px-4 text-center">

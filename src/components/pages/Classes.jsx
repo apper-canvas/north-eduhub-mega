@@ -40,8 +40,8 @@ const Classes = () => {
   const getStudentNames = (studentIds) => {
     if (!studentIds || studentIds.length === 0) return [];
     return studentIds.map(id => {
-      const student = students.find(s => s.Id === parseInt(id));
-      return student ? `${student.firstName} ${student.lastName}` : "Unknown";
+const student = students.find(s => s.Id === parseInt(id));
+      return student ? `${student.first_name_c} ${student.last_name_c}` : "Unknown";
     });
   };
 
@@ -77,8 +77,8 @@ const Classes = () => {
       {classes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {classes.map((classItem) => {
-            const enrolledCount = classItem.students.length;
-            const capacityPercentage = Math.round((enrolledCount / classItem.maxCapacity) * 100);
+const enrolledCount = classItem.students?.length || 0;
+const capacityPercentage = Math.round((enrolledCount / classItem.max_capacity_c) * 100);
 
             return (
               <Card key={classItem.Id} className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
@@ -86,11 +86,11 @@ const Classes = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <CardTitle className="text-lg font-semibold text-gray-900 mb-1">
-                        {classItem.name}
+                        {classItem.name_c}
                       </CardTitle>
-                      <p className="text-sm text-gray-600">{classItem.subject}</p>
+                      <p className="text-sm text-gray-600">{classItem.subject_c}</p>
                     </div>
-                    <Badge variant={getCapacityColor(enrolledCount, classItem.maxCapacity)}>
+                    <Badge variant={getCapacityColor(enrolledCount, classItem.max_capacity_c)}>
                       {capacityPercentage}% Full
                     </Badge>
                   </div>
@@ -98,24 +98,24 @@ const Classes = () => {
                 <CardContent className="space-y-4">
                   <div className="flex items-center">
                     <ApperIcon name="User" className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-700">{classItem.teacher}</span>
+                    <span className="text-sm text-gray-700">{classItem.teacher_c}</span>
                   </div>
 
                   <div className="flex items-center">
                     <ApperIcon name="MapPin" className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-700">{classItem.room}</span>
+                    <span className="text-sm text-gray-700">{classItem.room_c}</span>
                   </div>
 
                   <div className="flex items-start">
                     <ApperIcon name="Clock" className="w-4 h-4 text-gray-400 mr-2 mt-0.5" />
                     <div className="flex-1">
                       <div className="text-sm text-gray-700">
-                        {classItem.schedule.slice(0, 2).map((time, index) => (
-                          <div key={index}>{time}</div>
+                        {classItem.schedule_c?.split(',').slice(0, 2).map((time, index) => (
+                          <div key={index}>{time.trim()}</div>
                         ))}
-                        {classItem.schedule.length > 2 && (
+                        {classItem.schedule_c?.split(',').length > 2 && (
                           <div className="text-gray-500">
-                            +{classItem.schedule.length - 2} more
+                            +{classItem.schedule_c.split(',').length - 2} more
                           </div>
                         )}
                       </div>
@@ -199,7 +199,7 @@ const Classes = () => {
               <ApperIcon name="User" className="w-6 h-6 text-yellow-600" />
             </div>
             <p className="text-2xl font-bold text-gray-900">
-              {new Set(classes.map(c => c.teacher)).size}
+{new Set(classes.map(c => c.teacher_c)).size}
             </p>
             <p className="text-sm text-gray-600">Teachers</p>
           </CardContent>
@@ -211,7 +211,7 @@ const Classes = () => {
               <ApperIcon name="MapPin" className="w-6 h-6 text-purple-600" />
             </div>
             <p className="text-2xl font-bold text-gray-900">
-              {new Set(classes.map(c => c.room)).size}
+{new Set(classes.map(c => c.room_c)).size}
             </p>
             <p className="text-sm text-gray-600">Rooms</p>
           </CardContent>

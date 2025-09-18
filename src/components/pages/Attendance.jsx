@@ -40,14 +40,27 @@ const Attendance = () => {
     loadData();
   }, []);
 
-  const handleUpdateAttendance = async (attendanceId, attendanceData) => {
+const handleUpdateAttendance = async (attendanceId, attendanceData) => {
     try {
+      const mappedData = {
+        Name: attendanceData.Name || "",
+        date_c: attendanceData.date_c,
+        status_c: attendanceData.status_c,
+        notes_c: attendanceData.notes_c,
+        student_id_c: attendanceData.student_id_c,
+        class_id_c: attendanceData.class_id_c
+      };
+      
       if (attendanceId) {
-        const updatedRecord = await attendanceService.update(attendanceId, attendanceData);
-        setAttendance(prev => prev.map(a => a.Id === attendanceId ? updatedRecord : a));
+        const updatedRecord = await attendanceService.update(attendanceId, mappedData);
+        if (updatedRecord) {
+          setAttendance(prev => prev.map(a => a.Id === attendanceId ? updatedRecord : a));
+        }
       } else {
-        const newRecord = await attendanceService.create(attendanceData);
-        setAttendance(prev => [...prev, newRecord]);
+        const newRecord = await attendanceService.create(mappedData);
+        if (newRecord) {
+          setAttendance(prev => [...prev, newRecord]);
+        }
       }
     } catch (error) {
       throw error;
@@ -57,9 +70,9 @@ const Attendance = () => {
   const calculateAttendanceStats = () => {
     if (attendance.length === 0) return { presentRate: 0, absentRate: 0, lateRate: 0 };
 
-    const present = attendance.filter(a => a.status === "present").length;
-    const absent = attendance.filter(a => a.status === "absent").length;
-    const late = attendance.filter(a => a.status === "late").length;
+const present = attendance.filter(a => a.status_c === "present").length;
+    const absent = attendance.filter(a => a.status_c === "absent").length;
+    const late = attendance.filter(a => a.status_c === "late").length;
     const total = attendance.length;
 
     return {
@@ -162,11 +175,11 @@ const Attendance = () => {
         <CardContent>
           <div className="space-y-3">
             {attendance
-              .filter(a => a.status === "absent")
-              .sort((a, b) => new Date(b.date) - new Date(a.date))
+.filter(a => a.status_c === "absent")
+              .sort((a, b) => new Date(b.date_c) - new Date(a.date_c))
               .slice(0, 5)
               .map((record) => {
-                const student = students.find(s => s.Id === parseInt(record.studentId));
+const student = students.find(s => s.Id === parseInt(record.student_id_c?.Id || record.student_id_c));
                 return (
                   <div key={record.Id} className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100">
                     <div className="flex items-center">
@@ -175,10 +188,10 @@ const Attendance = () => {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">
-                          {student ? `${student.firstName} ${student.lastName}` : "Unknown Student"}
+{student ? `${student.first_name_c} ${student.last_name_c}` : "Unknown Student"}
                         </p>
                         <p className="text-sm text-gray-600">
-                          {new Date(record.date).toLocaleDateString()}
+{new Date(record.date_c).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
@@ -186,14 +199,14 @@ const Attendance = () => {
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                         Absent
                       </span>
-                      {record.notes && (
-                        <p className="text-xs text-gray-500 mt-1">{record.notes}</p>
+{record.notes_c && (
+                        <p className="text-xs text-gray-500 mt-1">{record.notes_c}</p>
                       )}
                     </div>
                   </div>
                 );
               })}
-            {attendance.filter(a => a.status === "absent").length === 0 && (
+{attendance.filter(a => a.status_c === "absent").length === 0 && (
               <div className="text-center py-8 text-gray-500">
                 <ApperIcon name="CheckCircle" className="w-8 h-8 mx-auto mb-2 text-gray-400" />
                 <p>No recent absences - great attendance!</p>

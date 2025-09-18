@@ -42,8 +42,21 @@ const Grades = () => {
 
   const handleUpdateGrade = async (gradeId, gradeData) => {
     try {
-      const updatedGrade = await gradeService.update(gradeId, gradeData);
-      setGrades(prev => prev.map(g => g.Id === gradeId ? updatedGrade : g));
+const mappedData = {
+        Name: gradeData.Name,
+        assignment_name_c: gradeData.assignment_name_c,
+        score_c: gradeData.score_c,
+        max_score_c: gradeData.max_score_c,
+        date_c: gradeData.date_c,
+        category_c: gradeData.category_c,
+        student_id_c: gradeData.student_id_c,
+        class_id_c: gradeData.class_id_c
+      };
+      
+      const updatedGrade = await gradeService.update(gradeId, mappedData);
+      if (updatedGrade) {
+        setGrades(prev => prev.map(g => g.Id === gradeId ? updatedGrade : g));
+      }
     } catch (error) {
       throw error;
     }
@@ -52,8 +65,8 @@ const Grades = () => {
   const calculateOverallStats = () => {
     if (grades.length === 0) return { avgGrade: 0, totalAssignments: 0, gradingProgress: 0 };
 
-    const avgGrade = Math.round(
-      grades.reduce((sum, grade) => sum + (grade.score / grade.maxScore * 100), 0) / grades.length
+const avgGrade = Math.round(
+      grades.reduce((sum, grade) => sum + (grade.score_c / grade.max_score_c * 100), 0) / grades.length
     );
 
     const totalAssignments = grades.length;

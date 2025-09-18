@@ -46,8 +46,8 @@ const Reports = () => {
   }, []);
 
   const generateEnrollmentByGradeChart = () => {
-    const gradeData = students.reduce((acc, student) => {
-      const grade = student.grade || "Unknown";
+const gradeData = students.reduce((acc, student) => {
+      const grade = student.grade_c || "Unknown";
       acc[grade] = (acc[grade] || 0) + 1;
       return acc;
     }, {});
@@ -78,7 +78,7 @@ const Reports = () => {
 
   const generateAttendanceChart = () => {
     const attendanceData = attendance.reduce((acc, record) => {
-      const status = record.status;
+const status = record.status_c;
       acc[status] = (acc[status] || 0) + 1;
       return acc;
     }, {});
@@ -117,7 +117,7 @@ const Reports = () => {
     };
 
     grades.forEach(grade => {
-      const percentage = (grade.score / grade.maxScore) * 100;
+const percentage = (grade.score_c / grade.max_score_c) * 100;
       if (percentage >= 90) gradeRanges["A (90-100%)"]++;
       else if (percentage >= 80) gradeRanges["B (80-89%)"]++;
       else if (percentage >= 70) gradeRanges["C (70-79%)"]++;
@@ -222,7 +222,7 @@ const Reports = () => {
               <ApperIcon name="Calendar" className="w-6 h-6 text-yellow-600" />
             </div>
             <p className="text-2xl font-bold text-gray-900">
-              {Math.round((attendance.filter(a => a.status === "present").length / attendance.length) * 100) || 0}%
+{Math.round((attendance.filter(a => a.status_c === "present").length / attendance.length) * 100) || 0}%
             </p>
             <p className="text-sm text-gray-600">Attendance Rate</p>
           </CardContent>
@@ -234,7 +234,7 @@ const Reports = () => {
               <ApperIcon name="TrendingUp" className="w-6 h-6 text-purple-600" />
             </div>
             <p className="text-2xl font-bold text-gray-900">
-              {Math.round(grades.reduce((sum, g) => sum + (g.score / g.maxScore * 100), 0) / grades.length) || 0}%
+{Math.round(grades.reduce((sum, g) => sum + (g.score_c / g.max_score_c * 100), 0) / grades.length) || 0}%
             </p>
             <p className="text-sm text-gray-600">Average Grade</p>
           </CardContent>
@@ -320,12 +320,12 @@ const Reports = () => {
               </thead>
               <tbody>
                 {classes.map((classItem) => {
-                  const classGrades = grades.filter(g => parseInt(g.classId) === classItem.Id);
+const classGrades = grades.filter(g => parseInt(g.class_id_c?.Id || g.class_id_c) === classItem.Id);
                   const avgGrade = classGrades.length > 0 
                     ? Math.round(classGrades.reduce((sum, g) => sum + (g.score / g.maxScore * 100), 0) / classGrades.length)
                     : 0;
                   
-                  const classAttendance = attendance.filter(a => parseInt(a.classId) === classItem.Id);
+const classAttendance = attendance.filter(a => parseInt(a.class_id_c?.Id || a.class_id_c) === classItem.Id);
                   const attendanceRate = classAttendance.length > 0
                     ? Math.round((classAttendance.filter(a => a.status === "present").length / classAttendance.length) * 100)
                     : 0;
@@ -334,13 +334,13 @@ const Reports = () => {
                     <tr key={classItem.Id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                       <td className="py-4 px-4">
                         <div>
-                          <p className="font-medium text-gray-900">{classItem.name}</p>
-                          <p className="text-sm text-gray-600">{classItem.subject}</p>
+<p className="font-medium text-gray-900">{classItem.name_c}</p>
+                          <p className="text-sm text-gray-600">{classItem.subject_c}</p>
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-gray-700">{classItem.teacher}</td>
+<td className="py-4 px-4 text-gray-700">{classItem.teacher_c}</td>
                       <td className="py-4 px-4 text-center text-gray-900 font-medium">
-                        {classItem.students.length}
+{classItem.students?.length || 0}
                       </td>
                       <td className="py-4 px-4 text-center">
                         <span className={`font-medium ${
