@@ -1,15 +1,15 @@
 import { toast } from "react-toastify";
 
+const { ApperClient } = window.ApperSDK;
+
+const apperClient = new ApperClient({
+  apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+  apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+});
 
 export const studentService = {
   async getAll() {
     try {
-      const { ApperClient } = window.ApperSDK;
-      const apperClient = new ApperClient({
-        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
-        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
-      });
-
       const params = {
         fields: [
           {"field": {"Name": "Name"}},
@@ -53,14 +53,8 @@ export const studentService = {
     }
   },
 
-async getById(id) {
+  async getById(id) {
     try {
-      const { ApperClient } = window.ApperSDK;
-      const apperClient = new ApperClient({
-        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
-        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
-      });
-
       const params = {
         fields: [
           {"field": {"Name": "Name"}},
@@ -99,14 +93,8 @@ async getById(id) {
     }
   },
 
-async create(studentData) {
+  async create(studentData) {
     try {
-      const { ApperClient } = window.ApperSDK;
-      const apperClient = new ApperClient({
-        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
-        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
-      });
-
       const params = {
         records: [{
           Name: studentData.Name,
@@ -164,14 +152,8 @@ async create(studentData) {
     }
   },
 
-async update(id, studentData) {
+  async update(id, studentData) {
     try {
-      const { ApperClient } = window.ApperSDK;
-      const apperClient = new ApperClient({
-        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
-        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
-      });
-
       const params = {
         records: [{
           Id: parseInt(id),
@@ -230,15 +212,9 @@ async update(id, studentData) {
     }
   },
 
-async delete(id) {
+  async delete(id) {
     try {
-      const { ApperClient } = window.ApperSDK;
-      const apperClient = new ApperClient({
-        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
-        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
-      });
-
-      const params = {
+      const params = { 
         RecordIds: [parseInt(id)]
       };
 
