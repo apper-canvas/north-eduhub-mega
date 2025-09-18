@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-import { AuthContext } from "../App";
+import { AuthContext } from "../../App";
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
